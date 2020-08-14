@@ -1,8 +1,8 @@
-<div>
-  <h1>Potentially some navbar here</h1>
+<div class="root mat-app-background dark-theme">
+  <h1>Rawpotion</h1>
 
-  <button *ngIf="!loggedIn" (click)="login()">Login</button>
-  <button *ngIf="loggedIn" (click)="logout()">Logout</button>
+  <button mat-raised-button color="primary" *ngIf="!loggedIn" (click)="login()">Login</button>
+  <button mat-raised-button color="warn" *ngIf="loggedIn" (click)="logout()">Logout</button>
 
   <div>
     <router-outlet></router-outlet>
