@@ -1,0 +1,14 @@
+{
+  "projects": {
+    "default": "rawpotion-64d41"
+  },
+  "targets": {
+    "rawpotion-64d41": {
+      "hosting": {
+        "rawpotion": [
+          "rawpotion-64d41"
+        ]
+      }
+    }
+  }
+}
