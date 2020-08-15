@@ -1,1 +1,22 @@
-<p>groups works!</p>
+<div class="groups-component">
+  <ng-container *ngIf="groups.length == 0">
+    <h3>No groups available</h3>
+    <button mat-stroked-button color="primary" routerLink="/groups/create">Create one</button>
+  </ng-container>
+  <ng-container *ngIf="groups && groups.length > 0">
+    <h3>Your groups</h3>
+    <mat-accordion>
+      <mat-expansion-panel hideToggle *ngFor="let group of groups">
+        <mat-expansion-panel-header>
+          <mat-panel-title>{{group.name}}</mat-panel-title>
+        </mat-expansion-panel-header>
+        <mat-panel-description>
+          {{group | json}}
+        </mat-panel-description>
+        <mat-action-row>
+          <button mat-raised-button color="accent" routerLink="/groups/{{group.id}}">GO</button>
+        </mat-action-row>
+      </mat-expansion-panel>
+    </mat-accordion>
+  </ng-container>
+</div>
