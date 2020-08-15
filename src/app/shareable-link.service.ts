@@ -44,4 +44,18 @@ export class ShareableLinkService {
   deleteLink(groupId: string, linkId: string): Promise<void> {
     return this.getLinksRef(groupId).doc(linkId).delete();
   }
+
+  getLink(groupId: string, linkSlug: string): Observable<ShareableLink> {
+    return this.getLinksRef(groupId)
+      .doc<ShareableLink>(linkSlug)
+      .valueChanges()
+      .pipe(
+        map((link) => {
+          if (!link) {
+            return null;
+          }
+          return { ...link, id: linkSlug } as ShareableLink;
+        })
+      );
+  }
 }

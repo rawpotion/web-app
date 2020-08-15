@@ -45,4 +45,8 @@ export class ActiveLinksComponent implements OnInit, OnDestroy {
       this.linksService.deleteLink(this.groupId, link.id);
     }
   }
+
+  copy(link): string {
+    return this.getLinkAsUrl(link);
+  }
 }

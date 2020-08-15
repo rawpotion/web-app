@@ -25,6 +25,8 @@ import { MatExpansionModule } from '@angular/material/expansion';
 import { GroupDetailsComponent } from './group-details/group-details.component';
 import { DisplayNameComponent } from './display-name/display-name.component';
 import { ActiveLinksComponent } from './active-links/active-links.component';
+import { ClipboardModule } from '@angular/cdk/clipboard';
+import { JoinGroupComponent } from './join-group/join-group.component';
 
 console.log(environment);
 
@@ -39,6 +41,7 @@ console.log(environment);
     GroupDetailsComponent,
     DisplayNameComponent,
     ActiveLinksComponent,
+    JoinGroupComponent,
   ],
   imports: [
     BrowserModule,
@@ -55,9 +58,13 @@ console.log(environment);
     MatInputModule,
     ReactiveFormsModule,
     MatExpansionModule,
+    ClipboardModule,
   ],
   providers: [
-    {provide: SETTINGS, useFactory: () => ({host: 'localhost:4301', ssl: false})}
+    {
+      provide: SETTINGS,
+      useFactory: () => environment.production ? {} : ({ host: 'localhost:4301', ssl: false }),
+    },
   ],
   bootstrap: [AppComponent],
 })

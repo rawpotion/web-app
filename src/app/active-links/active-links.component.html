@@ -23,7 +23,7 @@
           </div>
         </mat-panel-description>
         <mat-action-row>
-          <button mat-stroked-button>Copy</button>
+          <button mat-stroked-button [cdkCopyToClipboard]="copy(link)">Copy</button>
           <button mat-stroked-button color="warn" (click)="deleteLink(link)">Delete</button>
         </mat-action-row>
       </mat-expansion-panel>

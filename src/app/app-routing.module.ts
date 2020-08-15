@@ -8,6 +8,7 @@ import { GroupsComponent } from './groups/groups.component';
 import { CreateGroupComponent } from './create-group/create-group.component';
 import { GroupDetailsComponent } from './group-details/group-details.component';
 import { ActiveLinksComponent } from './active-links/active-links.component';
+import {JoinGroupComponent} from './join-group/join-group.component';
 
 const routes: Routes = [
   {
@@ -18,6 +19,11 @@ const routes: Routes = [
   {
     path: 'groups/:groupId/active-links',
     component: ActiveLinksComponent,
+    canActivate: [AngularFireAuthGuard],
+  },
+  {
+    path: 'groups/:groupId/join/:linkSlug',
+    component: JoinGroupComponent,
     canActivate: [AngularFireAuthGuard],
   },
   {

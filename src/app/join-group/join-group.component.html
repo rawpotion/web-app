@@ -1,0 +1,29 @@
+<div class="join-going-component">
+  <ng-container *ngIf="loading">Loading...</ng-container>
+  <ng-container *ngIf="!loading && group && link">
+    <mat-card>
+      <mat-card-header>
+        <mat-card-title>
+          {{group.name}}
+        </mat-card-title>
+        <mat-card-subtitle>
+          Join the group
+        </mat-card-subtitle>
+      </mat-card-header>
+      <mat-card-content>
+        <div>
+          <p>Members: </p>
+          <ul>
+            <li *ngFor="let member of group.members">
+              <app-display-name [userId]="member"></app-display-name>
+            </li>
+          </ul>
+        </div>
+      </mat-card-content>
+      <mat-card-actions>
+        <button mat-stroked-button color="accent" (click)="join()">Join</button>
+        <button mat-button color="warn" (click)="cancel()">Cancel</button>
+      </mat-card-actions>
+    </mat-card>
+  </ng-container>
+</div>
