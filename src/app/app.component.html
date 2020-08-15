@@ -1,11 +1,13 @@
 <div class="root mat-app-background dark-theme">
-  <h1>Rawpotion</h1>
+  <mat-toolbar color="primary">
+    <button mat-icon-button><mat-icon>menu</mat-icon></button>
+    <span routerLink="/">Rawpotion</span>
+    <span class="example-spacer"></span>
+    <button *ngIf="!loggedIn" mat-icon-button (click)="login()"><mat-icon>login</mat-icon></button>
+    <button *ngIf="loggedIn" routerLink="/profile" routerLinkActive="link-active" mat-icon-button><mat-icon>account_circle</mat-icon></button>
+  </mat-toolbar>
 
-  <button mat-raised-button color="primary" *ngIf="!loggedIn" (click)="login()">Login</button>
-  <button mat-raised-button color="warn" *ngIf="loggedIn" (click)="logout()">Logout</button>
-
-  <div>
+  <div class="container">
     <router-outlet></router-outlet>
   </div>
 </div>
-

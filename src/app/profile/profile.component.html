@@ -1,0 +1,22 @@
+<div class="profile-component">
+  <div *ngIf="loading" class="loading">Loading...</div>
+  <div *ngIf="!loading">
+    <mat-card class="profile-card">
+      <mat-card-header>
+        <img mat-card-avatar [src]="user.photoURL" />
+
+        <mat-card-title>{{ user.displayName }}</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        Some bio
+      </mat-card-content>
+      <mat-card-actions>
+        <button mat-raised-button color="primary">Edit</button>
+      </mat-card-actions>
+    </mat-card>
+
+    <div class="profile-logout">
+      <button mat-raised-button color="warn" (click)="logout()">Logout</button>
+    </div>
+  </div>
+</div>
