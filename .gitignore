@@ -49,3 +49,6 @@ src/environments/environment.prod.ts
 src/environments/environment.ts
 
 /credentials/
+
+firebase-debug.log
+firestore-debug.log
