@@ -1,11 +1,12 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 
+import { environment } from '../environments/environment';
+
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { AngularFireModule } from '@angular/fire';
-import { environment } from '../environments/environment';
-import { AngularFirestoreModule } from '@angular/fire/firestore';
+import { AngularFirestoreModule, SETTINGS } from '@angular/fire/firestore';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { StylingModule } from './styling/styling.module';
 import { MatButtonModule } from '@angular/material/button';
@@ -21,6 +22,11 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatExpansionModule } from '@angular/material/expansion';
+import { GroupDetailsComponent } from './group-details/group-details.component';
+import { DisplayNameComponent } from './display-name/display-name.component';
+import { ActiveLinksComponent } from './active-links/active-links.component';
+
+console.log(environment);
 
 @NgModule({
   declarations: [
@@ -30,6 +36,9 @@ import { MatExpansionModule } from '@angular/material/expansion';
     ProfileComponent,
     GroupsComponent,
     CreateGroupComponent,
+    GroupDetailsComponent,
+    DisplayNameComponent,
+    ActiveLinksComponent,
   ],
   imports: [
     BrowserModule,
@@ -47,7 +56,9 @@ import { MatExpansionModule } from '@angular/material/expansion';
     ReactiveFormsModule,
     MatExpansionModule,
   ],
-  providers: [],
+  providers: [
+    {provide: SETTINGS, useFactory: () => ({host: 'localhost:4301', ssl: false})}
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

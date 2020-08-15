@@ -1,0 +1,95 @@
+<div class="group-details-component">
+  <ng-container *ngIf="loading">
+    <div>
+      Loading...
+    </div>
+  </ng-container>
+  <ng-container *ngIf="!loading && group">
+    <mat-card>
+      <mat-card-header>
+        <mat-card-title>
+          {{ group.name }}
+        </mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <div>
+          <div class="group-details-owner">
+            Owner: <app-display-name [userId]="group.owner"></app-display-name>
+          </div>
+          <div class="group-details-members">
+            Members:
+            <ul>
+              <li *ngFor="let member of group.members">
+                <app-display-name [userId]="member"></app-display-name>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </mat-card-content>
+    </mat-card>
+
+    <div class="vertical-spacer"></div>
+
+    <mat-accordion>
+      <mat-expansion-panel>
+        <mat-expansion-panel-header>
+          Some specific event
+        </mat-expansion-panel-header>
+        <mat-panel-description>
+          <div>
+            <div class="group-details-attending-members">
+              Attending members:
+
+              <ul>
+                <li *ngFor="let member of group.members">
+                  <app-display-name [userId]="member"></app-display-name>
+                </li>
+              </ul>
+            </div>
+
+            <div class="group-details-invited-members">
+              Invited Members:
+
+              <ul>
+                <li *ngFor="let member of group.members">
+                  <app-display-name [userId]="member"></app-display-name>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </mat-panel-description>
+        <mat-action-row>
+          <button mat-stroked-button color="primary">View Details</button>
+          <button mat-raised-button color="accent">Attend</button>
+        </mat-action-row>
+      </mat-expansion-panel>
+    </mat-accordion>
+
+    <div class="vertical-spacer"></div>
+
+    <div class="group-details-actions">
+      <button
+        mat-stroked-button
+        color="accent"
+        routerLink="events/create"
+      >
+        Create Event
+      </button>
+      <button
+        mat-stroked-button
+        color="accent"
+        (click)="createShareableLink()"
+      >
+       Share
+      </button>
+      <button
+        mat-stroked-button
+        color="primary"
+        routerLink="active-links"
+      >
+       Active Links
+      </button>
+
+    </div>
+  </ng-container>
+</div>

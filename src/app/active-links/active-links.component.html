@@ -1,0 +1,32 @@
+<div class="active-links-components">
+  <ng-container *ngIf="loading">
+    <div>
+      Loading...
+    </div>
+  </ng-container>
+  <ng-container *ngIf="!loading && links.length != 0">
+    <mat-accordion>
+      <mat-expansion-panel *ngFor="let link of links">
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            {{getLinkAsUrl(link)}}
+          </mat-panel-title>
+        </mat-expansion-panel-header>
+        <mat-panel-description>
+          <div>
+            <div *ngIf="link.created">
+              Created: {{link.created}}
+            </div>
+            <div *ngIf="link.expires">
+              Expires: {{link.expires}}
+            </div>
+          </div>
+        </mat-panel-description>
+        <mat-action-row>
+          <button mat-stroked-button>Copy</button>
+          <button mat-stroked-button color="warn" (click)="deleteLink(link)">Delete</button>
+        </mat-action-row>
+      </mat-expansion-panel>
+    </mat-accordion>
+  </ng-container>
+</div>
