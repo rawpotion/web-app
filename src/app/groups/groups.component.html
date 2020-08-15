@@ -11,7 +11,15 @@
           <mat-panel-title>{{group.name}}</mat-panel-title>
         </mat-expansion-panel-header>
         <mat-panel-description>
-          {{group | json}}
+          <div>
+            Members:
+
+            <ul>
+              <li *ngFor="let member of group.members">
+                <app-display-name [userId]="member"></app-display-name>
+              </li>
+            </ul>
+          </div>
         </mat-panel-description>
         <mat-action-row>
           <button mat-raised-button color="accent" routerLink="/groups/{{group.id}}">GO</button>
