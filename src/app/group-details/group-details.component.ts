@@ -1,10 +1,10 @@
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { from, Subscription } from 'rxjs';
+import { from, Observable, ReplaySubject, Subscription } from 'rxjs';
 import { GroupsService } from '../groups.service';
 import { Group } from '../group';
 import { ShareableLinkService } from '../shareable-link.service';
-import { first } from 'rxjs/operators';
+import { first, takeUntil } from 'rxjs/operators';
 import { DinnerEvent, EventService } from '../event.service';
 import { UserService } from '../user.service';
 import { User } from 'firebase';
@@ -18,10 +18,9 @@ export class GroupDetailsComponent implements OnInit, OnDestroy {
   public loading = true;
   public group: Group;
   public events: DinnerEvent[];
-  public groupId: string;
   public userId: string;
 
-  private eventsSubscription: Subscription;
+  private destroyed$: ReplaySubject<boolean> = new ReplaySubject(1);
 
   constructor(
     private route: ActivatedRoute,
@@ -31,30 +30,33 @@ export class GroupDetailsComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
-    this.route.data.subscribe((data: { group: Group; user: User }) => {
-      this.userId = data.user.uid;
-      this.groupId = data.group.id;
-
-      this.loading = false;
-      if (this.eventsSubscription) {
-        this.eventsSubscription.unsubscribe();
-      }
-      this.eventsSubscription = this.eventService
-        .getFutureEvents(this.groupId)
-        .subscribe((events) => {
-          return (this.events = events);
+    this.route.data.subscribe(
+      (data: {
+        group$: Observable<Group>;
+        user$: Observable<User>;
+        events$: Observable<DinnerEvent[]>;
+      }) => {
+        data.user$.pipe(takeUntil(this.destroyed$)).subscribe((user) => {
+          this.userId = user.uid;
         });
-
-      return (this.group = data.group);
-    });
+        data.group$
+          .pipe(takeUntil(this.destroyed$))
+          .subscribe((group) => (this.group = group));
+        data.events$
+          .pipe(takeUntil(this.destroyed$))
+          .subscribe((events) => (this.events = events));
+        this.loading = false;
+      }
+    );
   }
 
   ngOnDestroy(): void {
-    this.eventsSubscription.unsubscribe();
+    this.destroyed$.next(true);
+    this.destroyed$.complete();
   }
 
   createShareableLink(): void {
-    from(this.linksService.createLink(this.groupId))
+    from(this.linksService.createLink(this.group.id))
       .pipe(first())
       .subscribe((link) => {
         if (link) {
@@ -64,18 +66,18 @@ export class GroupDetailsComponent implements OnInit, OnDestroy {
   }
 
   attend(event: DinnerEvent): Promise<void> {
-    return this.eventService.setAttending(event.id, this.groupId, this.userId);
+    return this.eventService.setAttending(event.id, this.group.id, this.userId);
   }
 
   cancelAttend(event: DinnerEvent): Promise<void> {
     return this.eventService.setNotAttending(
       event.id,
-      this.groupId,
+      this.group.id,
       this.userId
     );
   }
 
   delete(event: DinnerEvent): Promise<void> {
-    return this.eventService.delete(event.id, this.groupId);
+    return this.eventService.delete(event.id, this.group.id);
   }
 }

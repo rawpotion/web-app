@@ -1,8 +1,9 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ShareableLink, ShareableLinkService } from '../shareable-link.service';
 import { ActivatedRoute } from '@angular/router';
-import { first } from 'rxjs/operators';
-import { Subscription } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
+import { Observable, ReplaySubject } from 'rxjs';
+import { Group } from '../group';
 
 @Component({
   selector: 'app-active-links',
@@ -12,8 +13,9 @@ import { Subscription } from 'rxjs';
 export class ActiveLinksComponent implements OnInit, OnDestroy {
   loading = true;
   links: ShareableLink[] = [];
-  private linksSubscription: Subscription;
+
   private groupId: string;
+  private destroyed$ = new ReplaySubject(1);
 
   constructor(
     private linksService: ShareableLinkService,
@@ -21,23 +23,28 @@ export class ActiveLinksComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
-    this.route.params.pipe(first()).subscribe((params) => {
-      this.groupId = params.groupId;
-      this.linksSubscription = this.linksService
-        .getLinks(params.groupId)
-        .subscribe((links) => {
+    this.route.data.subscribe(
+      (data: {
+        group$: Observable<Group>;
+        links$: Observable<ShareableLink[]>;
+      }) => {
+        data.links$.pipe(takeUntil(this.destroyed$)).subscribe((links) => {
           this.loading = false;
           return (this.links = links);
         });
-    });
+        data.group$
+          .pipe(takeUntil(this.destroyed$))
+          .subscribe((group) => (this.groupId = group.id));
+      }
+    );
+  }
+  ngOnDestroy(): void {
+    this.destroyed$.next(true);
+    this.destroyed$.complete();
   }
 
   getLinkAsUrl(link: ShareableLink): string {
     return `${window.location.href}/join/${link.id}`;
-  }
-
-  ngOnDestroy(): void {
-    this.linksSubscription.unsubscribe();
   }
 
   deleteLink(link: ShareableLink): void {

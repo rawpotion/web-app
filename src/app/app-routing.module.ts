@@ -11,7 +11,9 @@ import { ActiveLinksComponent } from './active-links/active-links.component';
 import { JoinGroupComponent } from './join-group/join-group.component';
 import { CreateEventComponent } from './create-event/create-event.component';
 import { GroupResolverService } from './group-resolver.service';
-import {UserResolverService} from './user-resolver.service';
+import { UserResolverService } from './user-resolver.service';
+import { EventsResolverService } from './events-resolver.service';
+import { LinksResolverService } from './links-resolver.service';
 
 const routes: Routes = [
   {
@@ -23,11 +25,19 @@ const routes: Routes = [
     path: 'groups/:groupId/events/create',
     component: CreateEventComponent,
     canActivate: [AngularFireAuthGuard],
+    resolve: {
+      group$: GroupResolverService,
+      user$: UserResolverService
+    }
   },
   {
     path: 'groups/:groupId/active-links',
     component: ActiveLinksComponent,
     canActivate: [AngularFireAuthGuard],
+    resolve: {
+      group$: GroupResolverService,
+      links$: LinksResolverService,
+    },
   },
   {
     path: 'groups/:groupId/join/:linkSlug',
@@ -39,8 +49,9 @@ const routes: Routes = [
     component: GroupDetailsComponent,
     canActivate: [AngularFireAuthGuard],
     resolve: {
-      group: GroupResolverService,
-      user: UserResolverService
+      group$: GroupResolverService,
+      user$: UserResolverService,
+      events$: EventsResolverService,
     },
   },
   {
@@ -66,6 +77,11 @@ const routes: Routes = [
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule],
-  providers: [UserResolverService, GroupResolverService],
+  providers: [
+    UserResolverService,
+    GroupResolverService,
+    EventsResolverService,
+    LinksResolverService,
+  ],
 })
 export class AppRoutingModule {}

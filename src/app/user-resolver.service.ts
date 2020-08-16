@@ -4,8 +4,7 @@ import {
   Resolve,
   RouterStateSnapshot,
 } from '@angular/router';
-import { Observable } from 'rxjs';
-import { Group } from './group';
+import { Observable, of } from 'rxjs';
 import { catchError, first } from 'rxjs/operators';
 import { User } from 'firebase';
 import { UserService } from './user.service';
@@ -13,18 +12,20 @@ import { UserService } from './user.service';
 @Injectable({
   providedIn: 'root',
 })
-export class UserResolverService implements Resolve<User> {
+export class UserResolverService implements Resolve<Observable<User>> {
   constructor(private userService: UserService) {}
 
   resolve(
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot
-  ): Observable<User> {
-    return this.userService.user.pipe(first()).pipe(
-      catchError((error) => {
-        console.error(error);
-        throw new Error(error);
-      })
+  ): Observable<Observable<User>> {
+    return of(
+      this.userService.user.pipe(first()).pipe(
+        catchError((error) => {
+          console.error(error);
+          throw new Error(error);
+        })
+      )
     );
   }
 }

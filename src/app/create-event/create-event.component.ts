@@ -5,15 +5,14 @@ import {
   FormGroup,
   Validators,
 } from '@angular/forms';
-import {
-  NgxMaterialTimepickerModule,
-  NgxMaterialTimepickerTheme,
-} from 'ngx-material-timepicker';
+import { NgxMaterialTimepickerTheme } from 'ngx-material-timepicker';
 import { Location } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
 import { first } from 'rxjs/operators';
-import { UserService } from '../user.service';
 import { EventService } from '../event.service';
+import { User } from 'firebase';
+import { Observable } from 'rxjs';
+import { Group } from '../group';
 
 @Component({
   selector: 'app-create-event',
@@ -24,13 +23,14 @@ export class CreateEventComponent implements OnInit {
   form: FormGroup;
   minDate: Date;
   darkTheme: NgxMaterialTimepickerTheme;
+  private groupId: string;
+  private user: User;
 
   constructor(
     private fb: FormBuilder,
     private location: Location,
     private route: ActivatedRoute,
-    private eventService: EventService,
-    private userService: UserService
+    private eventService: EventService
   ) {
     this.darkTheme = {
       container: {
@@ -66,7 +66,16 @@ export class CreateEventComponent implements OnInit {
     return this.form.get('clock');
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.route.data.subscribe(
+      (data: { group$: Observable<Group>; user$: Observable<User> }) => {
+        data.user$.pipe(first()).subscribe((user) => (this.user = user));
+        data.group$
+          .pipe(first())
+          .subscribe((group) => (this.groupId = group.id));
+      }
+    );
+  }
 
   goBack(): void {
     this.location.back();
@@ -76,32 +85,20 @@ export class CreateEventComponent implements OnInit {
     if (this.form.invalid) {
       return;
     }
-
-    this.route.params.pipe(first()).subscribe((params) => {
-      const { groupId } = params;
-
-      this.userService.user.pipe(first()).subscribe((credentials) => {
-        this.userService
-          .getUser(credentials.uid)
-          .pipe(first())
-          .subscribe((user) => {
-            if (groupId && user) {
-              this.eventService
-                .createEvent(
-                  {
-                    date: new Date(this.date.value).valueOf(),
-                    recipe: this.recipe.value,
-                    time: this.clock.value,
-                    hostId: user.id,
-                  },
-                  groupId
-                )
-                .then(() => {
-                  this.location.back();
-                });
-            }
-          });
-      });
-    });
+    if (this.groupId && this.user.uid) {
+      this.eventService
+        .createEvent(
+          {
+            date: new Date(this.date.value).valueOf(),
+            recipe: this.recipe.value,
+            time: this.clock.value,
+            hostId: this.user.uid,
+          },
+          this.groupId
+        )
+        .then(() => {
+          this.location.back();
+        });
+    }
   }
 }
