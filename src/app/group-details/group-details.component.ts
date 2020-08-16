@@ -7,6 +7,7 @@ import { ShareableLinkService } from '../shareable-link.service';
 import { first } from 'rxjs/operators';
 import { DinnerEvent, EventService } from '../event.service';
 import { UserService } from '../user.service';
+import { User } from 'firebase';
 
 @Component({
   selector: 'app-group-details',
@@ -21,21 +22,20 @@ export class GroupDetailsComponent implements OnInit, OnDestroy {
   public userId: string;
 
   private eventsSubscription: Subscription;
-  private userSubscription: Subscription;
 
   constructor(
     private route: ActivatedRoute,
     private groupsService: GroupsService,
     private linksService: ShareableLinkService,
-    private eventService: EventService,
-    private userService: UserService
+    private eventService: EventService
   ) {}
 
   ngOnInit(): void {
-    this.route.data.subscribe((data: { group: Group }) => {
-      this.loading = false;
+    this.route.data.subscribe((data: { group: Group; user: User }) => {
+      this.userId = data.user.uid;
       this.groupId = data.group.id;
 
+      this.loading = false;
       if (this.eventsSubscription) {
         this.eventsSubscription.unsubscribe();
       }
@@ -47,14 +47,10 @@ export class GroupDetailsComponent implements OnInit, OnDestroy {
 
       return (this.group = data.group);
     });
-    this.userSubscription = this.userService.user.subscribe((user) => {
-      this.userId = user.uid;
-    });
   }
 
   ngOnDestroy(): void {
     this.eventsSubscription.unsubscribe();
-    this.userSubscription.unsubscribe();
   }
 
   createShareableLink(): void {
