@@ -32,8 +32,9 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { NgxMaterialTimepickerModule } from 'ngx-material-timepicker';
 import { AttendingMembersComponent } from './features/group/components/attending-members/attending-members.component';
+import { ServiceWorkerModule } from '@angular/service-worker';
 
-console.log(environment);
+console.log(environment.production);
 
 @NgModule({
   declarations: [
@@ -69,6 +70,7 @@ console.log(environment);
     MatDatepickerModule,
     MatNativeDateModule,
     NgxMaterialTimepickerModule,
+    ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),
   ],
   providers: [
     {

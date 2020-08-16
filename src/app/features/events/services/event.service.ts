@@ -35,7 +35,11 @@ export class EventService {
   getFutureEvents(groupId: string): Observable<DinnerEvent[]> {
     return this.getGroupDocRef(groupId)
       .collection<DinnerEvent>('events', (query) =>
-        query.where('date', '>', Date.now().valueOf())
+        query.where(
+          'date',
+          '>',
+          new Date(Date.now() - 24 * 60 * 60 * 1000).valueOf()
+        )
       )
       .valueChanges({ idField: 'id' });
   }

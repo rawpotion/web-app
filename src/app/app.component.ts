@@ -22,15 +22,33 @@ export class AppComponent implements OnInit, OnDestroy {
     private auth: AngularFireAuth,
     private userService: UserService
   ) {}
+  iOS(): boolean {
+    return (
+      [
+        'iPad Simulator',
+        'iPhone Simulator',
+        'iPod Simulator',
+        'iPad',
+        'iPhone',
+        'iPod',
+      ].includes(navigator.platform) ||
+      // iPad on iOS 13 detection
+      (navigator.userAgent.includes('Mac') && 'ontouchend' in document)
+    );
+  }
 
   login(): void {
-    this.auth
-      .signInWithPopup(new firebaseAuth.GoogleAuthProvider())
-      .then((credentials) => {
-        if (!environment.production) {
-          this.userService.createUser(credentials.user);
-        }
-      });
+    if (this.iOS()) {
+      this.auth.signInWithRedirect(new firebaseAuth.GoogleAuthProvider());
+    } else {
+      this.auth
+        .signInWithPopup(new firebaseAuth.GoogleAuthProvider())
+        .then((credentials) => {
+          if (!environment.production) {
+            this.userService.createUser(credentials.user);
+          }
+        });
+    }
   }
 
   logout(): void {

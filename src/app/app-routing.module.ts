@@ -45,7 +45,6 @@ const routes: Routes = [
   {
     path: 'groups/:groupId/join/:linkSlug',
     component: JoinGroupComponent,
-    canActivate: [AngularFireAuthGuard],
   },
   {
     path: 'groups/:groupId',
