@@ -15,13 +15,11 @@ import { UserService } from '../user.service';
 })
 export class GroupDetailsComponent implements OnInit, OnDestroy {
   public loading = true;
-  @Input() public group: Group;
+  public group: Group;
   public events: DinnerEvent[];
   public groupId: string;
   public userId: string;
 
-  private routeSubscription: Subscription;
-  private groupsSubscription: Subscription;
   private eventsSubscription: Subscription;
   private userSubscription: Subscription;
 
@@ -34,27 +32,9 @@ export class GroupDetailsComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
-    this.userSubscription = this.userService.user.subscribe((user) => {
-      this.userId = user.uid;
-    });
-
-    this.routeSubscription = this.route.params.subscribe((params) => {
-      this.loading = true;
-      this.groupId = params.groupId;
-      this.groupsSubscription = this.groupsService
-        .getGroup(this.groupId)
-        .subscribe((group) => {
-          if (group) {
-            this.group = {
-              ...group,
-              id: this.groupId,
-            };
-          } else {
-            throw new Error(`Group was not found, group = ${this.groupId}`);
-          }
-
-          this.loading = false;
-        });
+    this.route.data.subscribe((data: { group: Group }) => {
+      this.loading = false;
+      this.groupId = data.group.id;
 
       if (this.eventsSubscription) {
         this.eventsSubscription.unsubscribe();
@@ -62,16 +42,17 @@ export class GroupDetailsComponent implements OnInit, OnDestroy {
       this.eventsSubscription = this.eventService
         .getFutureEvents(this.groupId)
         .subscribe((events) => {
-          console.log(events);
-          console.log(Date.now().valueOf());
           return (this.events = events);
         });
+
+      return (this.group = data.group);
+    });
+    this.userSubscription = this.userService.user.subscribe((user) => {
+      this.userId = user.uid;
     });
   }
 
   ngOnDestroy(): void {
-    this.routeSubscription.unsubscribe();
-    this.groupsSubscription.unsubscribe();
     this.eventsSubscription.unsubscribe();
     this.userSubscription.unsubscribe();
   }

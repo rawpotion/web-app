@@ -7,6 +7,7 @@ import {
 import { Group } from './group';
 import { Observable } from 'rxjs';
 import { GroupsService } from './groups.service';
+import { catchError, first } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root',
@@ -18,6 +19,13 @@ export class GroupResolverService implements Resolve<Group> {
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot
   ): Observable<Group> {
-    return this.groupService.getGroup(route.paramMap.get('groupId'));
+    const groupId = route.paramMap.get('groupId');
+    return this.groupService.getGroup(groupId).pipe(
+      first(),
+      catchError((error) => {
+        console.error(error);
+        throw new Error('GroupId was not found' + error);
+      })
+    );
   }
 }

@@ -10,7 +10,7 @@ import { GroupDetailsComponent } from './group-details/group-details.component';
 import { ActiveLinksComponent } from './active-links/active-links.component';
 import { JoinGroupComponent } from './join-group/join-group.component';
 import { CreateEventComponent } from './create-event/create-event.component';
-import {GroupResolverService} from './group-resolver.service';
+import { GroupResolverService } from './group-resolver.service';
 
 const routes: Routes = [
   {
@@ -38,8 +38,8 @@ const routes: Routes = [
     component: GroupDetailsComponent,
     canActivate: [AngularFireAuthGuard],
     resolve: {
-      group: GroupResolverService
-    }
+      group: GroupResolverService,
+    },
   },
   {
     path: 'groups',
@@ -64,5 +64,6 @@ const routes: Routes = [
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule],
+  providers: [],
 })
 export class AppRoutingModule {}

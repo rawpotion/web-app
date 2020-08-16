@@ -32,6 +32,7 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { NgxMaterialTimepickerModule } from 'ngx-material-timepicker';
 import { AttendingMembersComponent } from './attending-members/attending-members.component';
+import { GroupResolverService } from './group-resolver.service';
 
 console.log(environment);
 
@@ -76,6 +77,7 @@ console.log(environment);
       useFactory: () =>
         environment.production ? {} : { host: 'localhost:4301', ssl: false },
     },
+    GroupResolverService,
   ],
   bootstrap: [AppComponent],
 })
