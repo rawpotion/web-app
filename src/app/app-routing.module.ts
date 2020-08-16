@@ -8,12 +8,19 @@ import { GroupsComponent } from './groups/groups.component';
 import { CreateGroupComponent } from './create-group/create-group.component';
 import { GroupDetailsComponent } from './group-details/group-details.component';
 import { ActiveLinksComponent } from './active-links/active-links.component';
-import {JoinGroupComponent} from './join-group/join-group.component';
+import { JoinGroupComponent } from './join-group/join-group.component';
+import { CreateEventComponent } from './create-event/create-event.component';
+import {GroupResolverService} from './group-resolver.service';
 
 const routes: Routes = [
   {
     path: 'groups/create',
     component: CreateGroupComponent,
+    canActivate: [AngularFireAuthGuard],
+  },
+  {
+    path: 'groups/:groupId/events/create',
+    component: CreateEventComponent,
     canActivate: [AngularFireAuthGuard],
   },
   {
@@ -30,6 +37,9 @@ const routes: Routes = [
     path: 'groups/:groupId',
     component: GroupDetailsComponent,
     canActivate: [AngularFireAuthGuard],
+    resolve: {
+      group: GroupResolverService
+    }
   },
   {
     path: 'groups',

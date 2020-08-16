@@ -27,6 +27,11 @@ import { DisplayNameComponent } from './display-name/display-name.component';
 import { ActiveLinksComponent } from './active-links/active-links.component';
 import { ClipboardModule } from '@angular/cdk/clipboard';
 import { JoinGroupComponent } from './join-group/join-group.component';
+import { CreateEventComponent } from './create-event/create-event.component';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatNativeDateModule } from '@angular/material/core';
+import { NgxMaterialTimepickerModule } from 'ngx-material-timepicker';
+import { AttendingMembersComponent } from './attending-members/attending-members.component';
 
 console.log(environment);
 
@@ -42,6 +47,8 @@ console.log(environment);
     DisplayNameComponent,
     ActiveLinksComponent,
     JoinGroupComponent,
+    CreateEventComponent,
+    AttendingMembersComponent,
   ],
   imports: [
     BrowserModule,
@@ -59,11 +66,15 @@ console.log(environment);
     ReactiveFormsModule,
     MatExpansionModule,
     ClipboardModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
+    NgxMaterialTimepickerModule,
   ],
   providers: [
     {
       provide: SETTINGS,
-      useFactory: () => environment.production ? {} : ({ host: 'localhost:4301', ssl: false }),
+      useFactory: () =>
+        environment.production ? {} : { host: 'localhost:4301', ssl: false },
     },
   ],
   bootstrap: [AppComponent],

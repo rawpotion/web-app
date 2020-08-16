@@ -1,10 +1,12 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { from, Subscription } from 'rxjs';
 import { GroupsService } from '../groups.service';
 import { Group } from '../group';
 import { ShareableLinkService } from '../shareable-link.service';
 import { first } from 'rxjs/operators';
+import { DinnerEvent, EventService } from '../event.service';
+import { UserService } from '../user.service';
 
 @Component({
   selector: 'app-group-details',
@@ -13,20 +15,29 @@ import { first } from 'rxjs/operators';
 })
 export class GroupDetailsComponent implements OnInit, OnDestroy {
   public loading = true;
-  public group: Group;
-
-  private groupId: string;
+  @Input() public group: Group;
+  public events: DinnerEvent[];
+  public groupId: string;
+  public userId: string;
 
   private routeSubscription: Subscription;
   private groupsSubscription: Subscription;
+  private eventsSubscription: Subscription;
+  private userSubscription: Subscription;
 
   constructor(
     private route: ActivatedRoute,
     private groupsService: GroupsService,
-    private linksService: ShareableLinkService
+    private linksService: ShareableLinkService,
+    private eventService: EventService,
+    private userService: UserService
   ) {}
 
   ngOnInit(): void {
+    this.userSubscription = this.userService.user.subscribe((user) => {
+      this.userId = user.uid;
+    });
+
     this.routeSubscription = this.route.params.subscribe((params) => {
       this.loading = true;
       this.groupId = params.groupId;
@@ -44,12 +55,25 @@ export class GroupDetailsComponent implements OnInit, OnDestroy {
 
           this.loading = false;
         });
+
+      if (this.eventsSubscription) {
+        this.eventsSubscription.unsubscribe();
+      }
+      this.eventsSubscription = this.eventService
+        .getFutureEvents(this.groupId)
+        .subscribe((events) => {
+          console.log(events);
+          console.log(Date.now().valueOf());
+          return (this.events = events);
+        });
     });
   }
 
   ngOnDestroy(): void {
     this.routeSubscription.unsubscribe();
     this.groupsSubscription.unsubscribe();
+    this.eventsSubscription.unsubscribe();
+    this.userSubscription.unsubscribe();
   }
 
   createShareableLink(): void {
@@ -60,5 +84,21 @@ export class GroupDetailsComponent implements OnInit, OnDestroy {
           alert(`${window.location.href}/join/${link.id}`);
         }
       });
+  }
+
+  attend(event: DinnerEvent): Promise<void> {
+    return this.eventService.setAttending(event.id, this.groupId, this.userId);
+  }
+
+  cancelAttend(event: DinnerEvent): Promise<void> {
+    return this.eventService.setNotAttending(
+      event.id,
+      this.groupId,
+      this.userId
+    );
+  }
+
+  delete(event: DinnerEvent): Promise<void> {
+    return this.eventService.delete(event.id, this.groupId);
   }
 }

@@ -30,37 +30,38 @@
 
     <div class="vertical-spacer"></div>
 
-    <mat-accordion>
-      <mat-expansion-panel>
+    <mat-accordion *ngIf="events && events.length != 0">
+      <mat-expansion-panel *ngFor="let event of events">
         <mat-expansion-panel-header>
-          Some specific event
+          <strong>{{ event.recipe }}</strong
+          >&nbsp;| {{ event.date | date: "fullDate" }}
         </mat-expansion-panel-header>
         <mat-panel-description>
           <div>
-            <div class="group-details-attending-members">
-              Attending members:
-
-              <ul>
-                <li *ngFor="let member of group.members">
-                  <app-display-name [userId]="member"></app-display-name>
-                </li>
-              </ul>
+            <div><strong>Recipe: </strong> {{ event.recipe }}</div>
+            <div>
+              <strong>Host: </strong>
+              <app-display-name [userId]="event.hostId"></app-display-name>
             </div>
+            <div>
+              <strong>Date: </strong> {{ event.date | date: "fullDate" }}
+            </div>
+            <div><strong>Time: </strong> {{ event.time }}</div>
+            <br />
 
-            <div class="group-details-invited-members">
-              Invited Members:
-
-              <ul>
-                <li *ngFor="let member of group.members">
-                  <app-display-name [userId]="member"></app-display-name>
-                </li>
-              </ul>
+            <div class="group-details-attending-members">
+              <app-attending-members
+                [groupId]="groupId"
+                [eventId]="event.id"
+              ></app-attending-members>
             </div>
           </div>
         </mat-panel-description>
         <mat-action-row>
+          <button mat-stroked-button color="warn" (click)="delete(event)"  *ngIf="event.hostId == userId">Delete</button>
           <button mat-stroked-button color="primary">View Details</button>
-          <button mat-raised-button color="accent">Attend</button>
+          <button mat-raised-button color="accent" (click)="attend(event)">Attend</button>
+          <button mat-raised-button color="warn" (click)="cancelAttend(event)">Cannot Attend</button>
         </mat-action-row>
       </mat-expansion-panel>
     </mat-accordion>
@@ -68,28 +69,15 @@
     <div class="vertical-spacer"></div>
 
     <div class="group-details-actions">
-      <button
-        mat-stroked-button
-        color="accent"
-        routerLink="events/create"
-      >
+      <button mat-stroked-button color="accent" routerLink="events/create">
         Create Event
       </button>
-      <button
-        mat-stroked-button
-        color="accent"
-        (click)="createShareableLink()"
-      >
-       Share
+      <button mat-stroked-button color="accent" (click)="createShareableLink()">
+        Share
       </button>
-      <button
-        mat-stroked-button
-        color="primary"
-        routerLink="active-links"
-      >
-       Active Links
+      <button mat-stroked-button color="primary" routerLink="active-links">
+        Active Links
       </button>
-
     </div>
   </ng-container>
 </div>

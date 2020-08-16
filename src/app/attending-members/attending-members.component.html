@@ -1,0 +1,8 @@
+<div class="attending-members-component" *ngIf="attendees.length > 0">
+  <strong>Attending members:</strong>
+  <ul>
+    <li *ngFor="let attendee of attendees">
+      <app-display-name [userId]="attendee"></app-display-name>
+    </li>
+  </ul>
+</div>
