@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Location } from '@angular/common';
-import { GroupsService } from '../groups.service';
+import { GroupsService } from '../../../../groups.service';
 import { first } from 'rxjs/operators';
 import { User } from 'firebase';
 import { from, Observable } from 'rxjs';

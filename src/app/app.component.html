@@ -3,11 +3,31 @@
     <button mat-icon-button><mat-icon>menu</mat-icon></button>
     <span routerLink="/">Rawpotion</span>
     <span class="example-spacer"></span>
-    <button *ngIf="!loggedIn" mat-icon-button (click)="login()"><mat-icon>login</mat-icon></button>
-    <ng-container *ngIf="loggedIn">
-      <button  routerLink="/groups" routerLinkActive="link-active" mat-icon-button><mat-icon>groups</mat-icon></button>
-      <button  routerLink="/profile" routerLinkActive="link-active" mat-icon-button><mat-icon>account_circle</mat-icon></button>
-    </ng-container>
+    <ng-template [ngIf]="loading" [ngIfElse]="isLoading">
+    </ng-template>
+    <ng-template #isLoading>
+      <ng-template [ngIf]="loggedIn" [ngIfElse]="isNotLoggedIn">
+        <button
+          routerLink="/groups"
+          routerLinkActive="link-active"
+          mat-icon-button
+        >
+          <mat-icon>groups</mat-icon>
+        </button>
+        <button
+          routerLink="/profile"
+          routerLinkActive="link-active"
+          mat-icon-button
+        >
+          <mat-icon>account_circle</mat-icon>
+        </button>
+      </ng-template>
+      <ng-template #isNotLoggedIn>
+        <button *ngIf="!loggedIn" mat-icon-button (click)="login()">
+          <mat-icon>login</mat-icon>
+        </button>
+      </ng-template>
+    </ng-template>
   </mat-toolbar>
 
   <div class="container">

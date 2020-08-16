@@ -1,12 +1,12 @@
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { from, Observable, ReplaySubject, Subscription } from 'rxjs';
-import { GroupsService } from '../groups.service';
-import { Group } from '../group';
-import { ShareableLinkService } from '../shareable-link.service';
+import { GroupsService } from '../../../../groups.service';
+import { Group } from '../../../../group';
+import { ShareableLinkService } from '../../../../shareable-link.service';
 import { first, takeUntil } from 'rxjs/operators';
-import { DinnerEvent, EventService } from '../event.service';
-import { UserService } from '../user.service';
+import { DinnerEvent, EventService } from '../../../../event.service';
+import { UserService } from '../../../../user.service';
 import { User } from 'firebase';
 
 @Component({

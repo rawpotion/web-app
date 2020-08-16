@@ -9,10 +9,10 @@ import { NgxMaterialTimepickerTheme } from 'ngx-material-timepicker';
 import { Location } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
 import { first } from 'rxjs/operators';
-import { EventService } from '../event.service';
+import { EventService } from '../../../../event.service';
 import { User } from 'firebase';
 import { Observable } from 'rxjs';
-import { Group } from '../group';
+import { Group } from '../../../../group';
 
 @Component({
   selector: 'app-create-event',

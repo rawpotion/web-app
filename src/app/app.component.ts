@@ -11,6 +11,7 @@ import { environment } from '../environments/environment';
   styleUrls: ['./app.component.sass'],
 })
 export class AppComponent implements OnInit, OnDestroy {
+  public loading = true;
   loggedIn = false;
   user: User = null;
 
@@ -37,13 +38,22 @@ export class AppComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.authStateSubscription = this.auth.authState.subscribe((user) => {
-      this.userService.addUser(user);
-    });
-    this.userServiceSubscription = this.userService.user.subscribe((user) => {
-      this.user = user;
-      this.loggedIn = this.userService.isLoggedIn();
-    });
+    this.authStateSubscription = this.auth.authState.subscribe(
+      (credentials) => {
+        this.userService.addUser(credentials);
+
+        if (this.userServiceSubscription) {
+          this.userServiceSubscription.unsubscribe();
+        }
+        this.userServiceSubscription = this.userService.user.subscribe(
+          (user) => {
+            this.user = user;
+            this.loggedIn = this.userService.isLoggedIn();
+            this.loading = false;
+          }
+        );
+      }
+    );
   }
 
   ngOnDestroy(): void {

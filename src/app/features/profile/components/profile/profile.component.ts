@@ -1,9 +1,9 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { UserService } from '../user.service';
+import { UserService } from '../../../../user.service';
 import { User } from 'firebase';
 import { from, Observable, Subscription } from 'rxjs';
-import {first} from 'rxjs/operators';
-import {Router} from '@angular/router';
+import { first } from 'rxjs/operators';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-profile',
@@ -32,8 +32,10 @@ export class ProfileComponent implements OnInit, OnDestroy {
   }
 
   logout(): void {
-    from(this.userService.logout()).pipe(first()).subscribe(() => {
-      this.router.navigateByUrl('/');
-    });
+    from(this.userService.logout())
+      .pipe(first())
+      .subscribe(() => {
+        this.router.navigateByUrl('/');
+      });
   }
 }

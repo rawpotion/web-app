@@ -1,15 +1,15 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { HomeComponent } from './home/home.component';
-import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
-import { ProfileComponent } from './profile/profile.component';
+import { HomeComponent } from './pages/home/home.component';
+import { PageNotFoundComponent } from './pages/page-not-found/page-not-found.component';
+import { ProfileComponent } from './features/profile/components/profile/profile.component';
 import { AngularFireAuthGuard } from '@angular/fire/auth-guard';
-import { GroupsComponent } from './groups/groups.component';
-import { CreateGroupComponent } from './create-group/create-group.component';
-import { GroupDetailsComponent } from './group-details/group-details.component';
-import { ActiveLinksComponent } from './active-links/active-links.component';
-import { JoinGroupComponent } from './join-group/join-group.component';
-import { CreateEventComponent } from './create-event/create-event.component';
+import { GroupsComponent } from './features/group/components/groups/groups.component';
+import { CreateGroupComponent } from './features/group/components/create-group/create-group.component';
+import { GroupDetailsComponent } from './features/group/components/group-details/group-details.component';
+import { ActiveLinksComponent } from './features/group/components/active-links/active-links.component';
+import { JoinGroupComponent } from './features/group/components/join-group/join-group.component';
+import { CreateEventComponent } from './features/events/components/create-event/create-event.component';
 import { GroupResolverService } from './group-resolver.service';
 import { UserResolverService } from './user-resolver.service';
 import { EventsResolverService } from './events-resolver.service';
@@ -21,8 +21,8 @@ const routes: Routes = [
     component: CreateGroupComponent,
     canActivate: [AngularFireAuthGuard],
     resolve: {
-      user$: UserResolverService
-    }
+      user$: UserResolverService,
+    },
   },
   {
     path: 'groups/:groupId/events/create',
@@ -30,8 +30,8 @@ const routes: Routes = [
     canActivate: [AngularFireAuthGuard],
     resolve: {
       group$: GroupResolverService,
-      user$: UserResolverService
-    }
+      user$: UserResolverService,
+    },
   },
   {
     path: 'groups/:groupId/active-links',

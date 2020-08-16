@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { Group } from '../group';
-import { GroupsService } from '../groups.service';
+import { Group } from '../../../../group';
+import { GroupsService } from '../../../../groups.service';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { first } from 'rxjs/operators';
 import { Subscription } from 'rxjs';
