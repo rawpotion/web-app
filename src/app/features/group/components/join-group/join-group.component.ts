@@ -1,15 +1,13 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Group } from '../../models/group';
-import {
-  ShareableLink,
-  ShareableLinkService,
-} from '../../services/shareable-link.service';
+import { ShareableLinkService } from '../../services/shareable-link.service';
 import { GroupsService } from '../../services/groups.service';
 import { Location } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { UserService } from '../../../user/services/user.service';
 import { first } from 'rxjs/operators';
+import { ShareableLink } from '../../models/shareable.link';
 
 @Component({
   selector: 'app-join-group',

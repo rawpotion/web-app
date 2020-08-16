@@ -1,11 +1,12 @@
 import { Injectable } from '@angular/core';
-import { ShareableLink, ShareableLinkService } from './shareable-link.service';
+import { ShareableLinkService } from './shareable-link.service';
 import {
   ActivatedRouteSnapshot,
   Resolve,
   RouterStateSnapshot,
 } from '@angular/router';
 import { Observable, of } from 'rxjs';
+import { ShareableLink } from '../models/shareable.link';
 
 @Injectable({
   providedIn: 'root',

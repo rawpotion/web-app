@@ -7,12 +7,7 @@ import {
 } from '@angular/fire/firestore';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-
-export class ShareableLink {
-  id?: string;
-  created?: string;
-  expires?: string;
-}
+import { ShareableLink } from '../models/shareable.link';
 
 @Injectable({
   providedIn: 'root',

@@ -1,12 +1,10 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import {
-  ShareableLink,
-  ShareableLinkService,
-} from '../../services/shareable-link.service';
+import { ShareableLinkService } from '../../services/shareable-link.service';
 import { ActivatedRoute } from '@angular/router';
 import { takeUntil } from 'rxjs/operators';
 import { Observable, ReplaySubject } from 'rxjs';
 import { Group } from '../../models/group';
+import { ShareableLink } from '../../models/shareable.link';
 
 @Component({
   selector: 'app-active-links',
