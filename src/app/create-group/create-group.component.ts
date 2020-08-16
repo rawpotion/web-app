@@ -1,17 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { Location } from '@angular/common';
 import { GroupsService } from '../groups.service';
-import { UserService } from '../user.service';
 import { first } from 'rxjs/operators';
 import { User } from 'firebase';
-import { from } from 'rxjs';
-import { Router } from '@angular/router';
-import {
-  FormBuilder,
-  FormControl,
-  FormGroup,
-  Validators,
-} from '@angular/forms';
+import { from, Observable } from 'rxjs';
+import { ActivatedRoute, Router } from '@angular/router';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-create-group',
@@ -24,10 +18,10 @@ export class CreateGroupComponent implements OnInit {
 
   constructor(
     private fb: FormBuilder,
+    private route: ActivatedRoute,
     private router: Router,
     private location: Location,
-    private groupsService: GroupsService,
-    private userService: UserService
+    private groupsService: GroupsService
   ) {}
 
   ngOnInit(): void {
@@ -35,10 +29,8 @@ export class CreateGroupComponent implements OnInit {
       groupName: ['', Validators.required],
     });
 
-    this.userService.user.pipe(first()).subscribe((user) => {
-      if (user) {
-        this.user = user;
-      }
+    this.route.data.subscribe((data: { user$: Observable<User> }) => {
+      data.user$.pipe(first()).subscribe((user) => (this.user = user));
     });
   }
 

@@ -20,6 +20,9 @@ const routes: Routes = [
     path: 'groups/create',
     component: CreateGroupComponent,
     canActivate: [AngularFireAuthGuard],
+    resolve: {
+      user$: UserResolverService
+    }
   },
   {
     path: 'groups/:groupId/events/create',
