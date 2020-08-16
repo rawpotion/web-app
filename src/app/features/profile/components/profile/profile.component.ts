@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { UserService } from '../../../../user.service';
+import { UserService } from '../../../user/services/user.service';
 import { User } from 'firebase';
 import { from, Observable, Subscription } from 'rxjs';
 import { first } from 'rxjs/operators';

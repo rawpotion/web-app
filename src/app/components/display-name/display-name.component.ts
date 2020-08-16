@@ -1,5 +1,8 @@
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
-import { StoredUser, UserService } from '../../user.service';
+import {
+  StoredUser,
+  UserService,
+} from '../../features/user/services/user.service';
 import { Subscription } from 'rxjs';
 import { first } from 'rxjs/operators';
 

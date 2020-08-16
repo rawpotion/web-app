@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { Group } from '../../../../group';
-import { GroupsService } from '../../../../groups.service';
+import { Group } from '../../models/group';
+import { GroupsService } from '../../services/groups.service';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { first } from 'rxjs/operators';
 import { Subscription } from 'rxjs';
@@ -11,6 +11,7 @@ import { Subscription } from 'rxjs';
   styleUrls: ['./groups.component.sass'],
 })
 export class GroupsComponent implements OnInit, OnDestroy {
+  public loading = true;
   groups: Group[] = [];
   private groupsSubscription: Subscription;
 
@@ -26,6 +27,7 @@ export class GroupsComponent implements OnInit, OnDestroy {
           .getGroups(user.uid)
           .subscribe((groups) => {
             this.groups = groups;
+            this.loading = false;
           });
       } else {
         throw new Error('Could not get user');
@@ -34,6 +36,8 @@ export class GroupsComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.groupsSubscription.unsubscribe();
+    if (this.groupsSubscription) {
+      this.groupsSubscription.unsubscribe();
+    }
   }
 }

@@ -6,7 +6,7 @@ import {
   DocumentReference,
 } from '@angular/fire/firestore';
 import { Observable } from 'rxjs';
-import { Group } from './group';
+import { Group } from '../models/group';
 import { map, switchMap } from 'rxjs/operators';
 import * as firebase from 'firebase';
 

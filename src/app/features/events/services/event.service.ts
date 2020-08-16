@@ -1,12 +1,11 @@
 import { Injectable } from '@angular/core';
 import {
   AngularFirestore,
-  AngularFirestoreCollection,
   AngularFirestoreDocument,
   DocumentData,
   DocumentReference,
 } from '@angular/fire/firestore';
-import { Group } from './group';
+import { Group } from '../../group/models/group';
 import { Observable } from 'rxjs';
 
 export class DinnerEvent {

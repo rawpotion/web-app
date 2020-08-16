@@ -2,7 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { auth as firebaseAuth, User } from 'firebase/app';
 import { Subscription } from 'rxjs';
-import { UserService } from './user.service';
+import { UserService } from './features/user/services/user.service';
 import { environment } from '../environments/environment';
 
 @Component({

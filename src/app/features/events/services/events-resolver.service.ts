@@ -6,7 +6,6 @@ import {
 } from '@angular/router';
 import { DinnerEvent, EventService } from './event.service';
 import { Observable, of } from 'rxjs';
-import { first, takeUntil } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root',

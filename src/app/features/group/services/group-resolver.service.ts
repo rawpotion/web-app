@@ -4,7 +4,7 @@ import {
   Resolve,
   RouterStateSnapshot,
 } from '@angular/router';
-import { Group } from './group';
+import { Group } from '../models/group';
 import { Observable, of } from 'rxjs';
 import { GroupsService } from './groups.service';
 import { catchError, first } from 'rxjs/operators';

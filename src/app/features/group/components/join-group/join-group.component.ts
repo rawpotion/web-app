@@ -1,14 +1,14 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { Group } from '../../../../group';
+import { Group } from '../../models/group';
 import {
   ShareableLink,
   ShareableLinkService,
-} from '../../../../shareable-link.service';
-import { GroupsService } from '../../../../groups.service';
+} from '../../services/shareable-link.service';
+import { GroupsService } from '../../services/groups.service';
 import { Location } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
-import { UserService } from '../../../../user.service';
+import { UserService } from '../../../user/services/user.service';
 import { first } from 'rxjs/operators';
 
 @Component({

@@ -10,10 +10,10 @@ import { GroupDetailsComponent } from './features/group/components/group-details
 import { ActiveLinksComponent } from './features/group/components/active-links/active-links.component';
 import { JoinGroupComponent } from './features/group/components/join-group/join-group.component';
 import { CreateEventComponent } from './features/events/components/create-event/create-event.component';
-import { GroupResolverService } from './group-resolver.service';
-import { UserResolverService } from './user-resolver.service';
-import { EventsResolverService } from './events-resolver.service';
-import { LinksResolverService } from './links-resolver.service';
+import { GroupResolverService } from './features/group/services/group-resolver.service';
+import { UserResolverService } from './features/profile/services/user-resolver.service';
+import { EventsResolverService } from './features/events/services/events-resolver.service';
+import { LinksResolverService } from './features/group/services/links-resolver.service';
 
 const routes: Routes = [
   {

@@ -7,7 +7,7 @@ import {
 import { Observable, of } from 'rxjs';
 import { catchError, first } from 'rxjs/operators';
 import { User } from 'firebase';
-import { UserService } from './user.service';
+import { UserService } from '../../user/services/user.service';
 
 @Injectable({
   providedIn: 'root',
