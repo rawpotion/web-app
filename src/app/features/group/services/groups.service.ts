@@ -54,4 +54,8 @@ export class GroupsService {
       members: firebase.firestore.FieldValue.arrayUnion(userId),
     });
   }
+
+  delete(groupId: string): Promise<void> {
+    return this.groupDocRef(groupId).delete();
+  }
 }

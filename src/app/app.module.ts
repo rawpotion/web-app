@@ -33,6 +33,10 @@ import { MatNativeDateModule } from '@angular/material/core';
 import { NgxMaterialTimepickerModule } from 'ngx-material-timepicker';
 import { AttendingMembersComponent } from './features/group/components/attending-members/attending-members.component';
 import { ServiceWorkerModule } from '@angular/service-worker';
+import { SettingsComponent } from './features/settings/components/settings/settings.component';
+import { GroupSettingsComponent } from './features/group/components/group-settings/group-settings.component';
+import { MatDividerModule } from '@angular/material/divider';
+import {MatSlideToggleModule} from '@angular/material/slide-toggle';
 
 console.log(environment.production);
 
@@ -50,6 +54,8 @@ console.log(environment.production);
     JoinGroupComponent,
     CreateEventComponent,
     AttendingMembersComponent,
+    SettingsComponent,
+    GroupSettingsComponent,
   ],
   imports: [
     BrowserModule,
@@ -70,7 +76,11 @@ console.log(environment.production);
     MatDatepickerModule,
     MatNativeDateModule,
     NgxMaterialTimepickerModule,
-    ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),
+    MatDividerModule,
+    MatSlideToggleModule,
+    ServiceWorkerModule.register('ngsw-worker.js', {
+      enabled: environment.production,
+    }),
   ],
   providers: [
     {

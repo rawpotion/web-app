@@ -1,0 +1,43 @@
+<div class="group-settings-component">
+  <ng-template [ngIf]="loading" [ngIfElse]="isNotLoading">
+    Loading...
+  </ng-template>
+  <ng-template #isNotLoading>
+    <mat-card>
+      <mat-card-header>
+        <mat-card-title>
+          Group Settings
+        </mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <div class="button-group">
+          <button
+            mat-stroked-button
+            color="accent"
+            (click)="createShareableLink()"
+            class="vertical-spacer"
+          >
+            Share
+          </button>
+          <button
+            mat-stroked-button
+            color="primary"
+            routerLink="../active-links"
+            class="vertical-spacer"
+          >
+            Active Links
+          </button>
+          <span class="spacer"></span>
+          <button
+            mat-button
+            color="warn"
+            routerLink="active-links"
+            (click)="deleteGroup()"
+          >
+            Delete
+          </button>
+        </div>
+      </mat-card-content>
+    </mat-card>
+  </ng-template>
+</div>

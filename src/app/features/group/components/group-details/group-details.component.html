@@ -26,6 +26,15 @@
           </div>
         </div>
       </mat-card-content>
+      <mat-card-actions class="group-details-actions">
+        <button mat-stroked-button color="accent" routerLink="events/create">
+          Create Event
+        </button>
+        <span class="spacer"></span>
+        <button mat-icon-button color="primary" routerLink="settings">
+          <mat-icon>settings</mat-icon>
+        </button>
+      </mat-card-actions>
     </mat-card>
 
     <div class="vertical-spacer"></div>
@@ -58,26 +67,25 @@
           </div>
         </mat-panel-description>
         <mat-action-row>
-          <button mat-stroked-button color="warn" (click)="delete(event)"  *ngIf="event.hostId == userId">Delete</button>
+          <button
+            mat-stroked-button
+            color="warn"
+            (click)="delete(event)"
+            *ngIf="event.hostId == userId"
+          >
+            Delete
+          </button>
           <button mat-stroked-button color="primary">View Details</button>
-          <button mat-raised-button color="accent" (click)="attend(event)">Attend</button>
-          <button mat-raised-button color="warn" (click)="cancelAttend(event)">Cannot Attend</button>
+          <button mat-raised-button color="accent" (click)="attend(event)">
+            Attend
+          </button>
+          <button mat-raised-button color="warn" (click)="cancelAttend(event)">
+            Cannot Attend
+          </button>
         </mat-action-row>
       </mat-expansion-panel>
     </mat-accordion>
 
     <div class="vertical-spacer"></div>
-
-    <div class="group-details-actions">
-      <button mat-stroked-button color="accent" routerLink="events/create">
-        Create Event
-      </button>
-      <button mat-stroked-button color="accent" (click)="createShareableLink()">
-        Share
-      </button>
-      <button mat-stroked-button color="primary" routerLink="active-links">
-        Active Links
-      </button>
-    </div>
   </ng-container>
 </div>

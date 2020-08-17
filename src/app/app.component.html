@@ -6,22 +6,25 @@
     <ng-template [ngIf]="loading" [ngIfElse]="isLoading">
     </ng-template>
     <ng-template #isLoading>
-      <ng-template [ngIf]="loggedIn" [ngIfElse]="isNotLoggedIn">
-        <button
-          routerLink="/groups"
-          routerLinkActive="link-active"
-          mat-icon-button
-        >
-          <mat-icon>groups</mat-icon>
-        </button>
-        <button
-          routerLink="/profile"
-          routerLinkActive="link-active"
-          mat-icon-button
-        >
-          <mat-icon>account_circle</mat-icon>
-        </button>
-      </ng-template>
+      <ng-template [ngIf]="loggedIn" [ngIfElse]="isNotLoggedIn" >
+        <div class="app-buttons">
+          <button
+            routerLink="/groups"
+            routerLinkActive="link-active"
+            mat-icon-button
+          >
+            <mat-icon>groups</mat-icon>
+          </button>
+          <button
+            routerLink="/profile"
+            routerLinkActive="link-active"
+            mat-icon-button
+          >
+            <mat-icon>account_circle</mat-icon>
+          </button>
+
+        </div>
+       </ng-template>
       <ng-template #isNotLoggedIn>
         <button *ngIf="!loggedIn" mat-icon-button (click)="login()">
           <mat-icon>login</mat-icon>

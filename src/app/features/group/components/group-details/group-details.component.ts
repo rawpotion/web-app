@@ -58,16 +58,6 @@ export class GroupDetailsComponent implements OnInit, OnDestroy {
     this.destroyed$.complete();
   }
 
-  createShareableLink(): void {
-    from(this.linksService.createLink(this.group.id))
-      .pipe(first())
-      .subscribe((link) => {
-        if (link) {
-          alert(`${window.location.href}/join/${link.id}`);
-        }
-      });
-  }
-
   attend(event: DinnerEvent): Promise<void> {
     return this.eventService.setAttending(event.id, this.group.id, this.userId);
   }

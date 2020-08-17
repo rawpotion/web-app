@@ -1,0 +1,31 @@
+<div class="settings-components">
+  <ng-template [ngIf]="!loading" [ngIfElse]="isLoading">
+    <mat-card>
+      <mat-card-header>
+        <mat-card-title>Settings</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <div class="content">
+          <mat-slide-toggle
+            (change)="settings.autoAttend = $event.checked"
+            [checked]="settings.autoAttend"
+            color="warn"
+          >
+            Auto Attend : WIP
+          </mat-slide-toggle>
+        </div>
+      </mat-card-content>
+      <mat-card-actions>
+        <button mat-stroked-button color="accent" (click)="saveSettings()">
+          Save changes
+        </button>
+      </mat-card-actions>
+    </mat-card>
+    <div class="logout">
+      <button mat-raised-button color="warn" (click)="logout()">Logout</button>
+    </div>
+  </ng-template>
+  <ng-template #isLoading>
+    Loading...
+  </ng-template>
+</div>

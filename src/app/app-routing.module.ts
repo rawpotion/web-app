@@ -14,8 +14,20 @@ import { GroupResolverService } from './features/group/services/group-resolver.s
 import { UserResolverService } from './features/profile/services/user-resolver.service';
 import { EventsResolverService } from './features/events/services/events-resolver.service';
 import { LinksResolverService } from './features/group/services/links-resolver.service';
+import { SettingsComponent } from './features/settings/components/settings/settings.component';
+import { GroupSettingsComponent } from './features/group/components/group-settings/group-settings.component';
+import { SettingsResolverService } from './features/settings/services/settings-resolver.service';
 
 const routes: Routes = [
+  {
+    path: 'settings',
+    component: SettingsComponent,
+    canActivate: [AngularFireAuthGuard],
+    resolve: {
+      user$: UserResolverService,
+      settings$: SettingsResolverService,
+    },
+  },
   {
     path: 'groups/create',
     component: CreateGroupComponent,
@@ -24,6 +36,16 @@ const routes: Routes = [
       user$: UserResolverService,
     },
   },
+  {
+    path: 'groups/:groupId/settings',
+    component: GroupSettingsComponent,
+    canActivate: [AngularFireAuthGuard],
+    resolve: {
+      group$: GroupResolverService,
+      user$: UserResolverService,
+    },
+  },
+
   {
     path: 'groups/:groupId/events/create',
     component: CreateEventComponent,

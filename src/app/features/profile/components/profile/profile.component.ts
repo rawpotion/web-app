@@ -30,12 +30,4 @@ export class ProfileComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     this.userServiceSubscription.unsubscribe();
   }
-
-  logout(): void {
-    from(this.userService.logout())
-      .pipe(first())
-      .subscribe(() => {
-        this.router.navigateByUrl('/');
-      });
-  }
 }
