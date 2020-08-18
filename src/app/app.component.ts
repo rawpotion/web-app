@@ -66,7 +66,7 @@ export class AppComponent implements OnInit, OnDestroy {
         if (this.userServiceSubscription) {
           this.userServiceSubscription.unsubscribe();
         }
-        this.userServiceSubscription = this.userService.user.subscribe(
+        this.userServiceSubscription = this.userService.getCurrentUser().subscribe(
           (user) => {
             this.user = user;
             this.loggedIn = this.userService.isLoggedIn();

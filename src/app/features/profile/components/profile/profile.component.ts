@@ -21,10 +21,12 @@ export class ProfileComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.userServiceSubscription = this.userService.user.subscribe((user) => {
-      this.user = user;
-      this.loading = false;
-    });
+    this.userServiceSubscription = this.userService
+      .getCurrentUser()
+      .subscribe((user) => {
+        this.user = user;
+        this.loading = false;
+      });
   }
 
   ngOnDestroy(): void {

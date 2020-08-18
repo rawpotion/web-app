@@ -34,9 +34,12 @@ export class JoinGroupComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
-    this.userService.user.pipe(takeUntil(this.destroyed$)).subscribe((user) => {
-      this.user = user;
-    });
+    this.userService
+      .getCurrentUser()
+      .pipe(takeUntil(this.destroyed$))
+      .subscribe((user) => {
+        this.user = user;
+      });
 
     this.route.params.subscribe((params) => {
       const { groupId, linkSlug } = params;
