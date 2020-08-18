@@ -16,6 +16,7 @@ export class DisplayNameComponent implements OnInit, OnDestroy {
 
   user: StoredUser;
   private userSubscription: Subscription;
+  private loading: boolean = true;
 
   constructor(private userService: UserService) {}
 
@@ -24,9 +25,9 @@ export class DisplayNameComponent implements OnInit, OnDestroy {
       .getUser(this.userId)
       .subscribe((user) => {
         if (user) {
+          console.debug("display-name: updating user")
           this.user = user;
-        } else {
-          console.error(`user not found for = ${this.userId}`);
+          this.loading = false;
         }
       });
   }

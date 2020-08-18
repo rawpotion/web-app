@@ -5,29 +5,45 @@ import {
   AngularFirestoreDocument,
   DocumentReference,
 } from '@angular/fire/firestore';
-import { Observable } from 'rxjs';
+import { BehaviorSubject, Observable, Subscription } from 'rxjs';
 import { Group } from '../models/group';
-import { map, switchMap } from 'rxjs/operators';
+import { map } from 'rxjs/operators';
 import * as firebase from 'firebase';
 
 @Injectable({
   providedIn: 'root',
 })
 export class GroupsService {
+  private groups = new BehaviorSubject<Group[]>([]);
+  private groups$ = this.groups.asObservable();
+  private groupsSubscription: Subscription;
+
   constructor(private auth: AngularFireAuth, private db: AngularFirestore) {}
 
   getGroups(uid: string): Observable<Group[]> {
-    return this.db
-      .collection<Group>('groups', (query) =>
-        query.where('members', 'array-contains', uid)
-      )
-      .valueChanges({ idField: 'id' });
+    if (!this.groupsSubscription) {
+      console.debug('fetching groups')
+      this.groupsSubscription = this.db
+        .collection<Group>('groups', (query) =>
+          query.where('members', 'array-contains', uid)
+        )
+        .valueChanges({ idField: 'id' })
+        .subscribe((groups) => {
+          console.debug('subscription called');
+          this.groups.next(groups);
+        });
+    }
+
+    return this.groups$;
   }
 
   getGroup(groupId: string): Observable<Group> {
     return this.groupDocRef(groupId)
       .valueChanges()
-      .pipe(map((group) => ({ ...group, id: groupId })));
+      .pipe(map((group) => {
+        console.debug("subscription called")
+        return ({...group, id: groupId});
+      }));
   }
 
   private groupDocRef(groupId: string): AngularFirestoreDocument<Group> {

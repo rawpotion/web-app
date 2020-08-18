@@ -69,7 +69,10 @@ export class CreateEventComponent implements OnInit {
   ngOnInit(): void {
     this.route.data.subscribe(
       (data: { group$: Observable<Group>; user$: Observable<User> }) => {
-        data.user$.pipe(first()).subscribe((user) => (this.user = user));
+        data.user$.pipe(first()).subscribe((user) => {
+          console.debug("events: updating user")
+          return (this.user = user);
+        });
         data.group$
           .pipe(first())
           .subscribe((group) => (this.groupId = group.id));

@@ -20,7 +20,7 @@ export class UserResolverService implements Resolve<Observable<User>> {
     state: RouterStateSnapshot
   ): Observable<Observable<User>> {
     return of(
-      this.userService.user.pipe(first()).pipe(
+      this.userService.getCurrentUser().pipe(
         catchError((error) => {
           console.error(error);
           throw new Error(error);

@@ -22,6 +22,7 @@ export class AppComponent implements OnInit, OnDestroy {
     private auth: AngularFireAuth,
     private userService: UserService
   ) {}
+
   iOS(): boolean {
     return (
       [
@@ -39,6 +40,7 @@ export class AppComponent implements OnInit, OnDestroy {
 
   login(): void {
     if (this.iOS()) {
+      console.log('Is iOS');
       this.auth.signInWithRedirect(new firebaseAuth.GoogleAuthProvider());
     } else {
       this.auth
@@ -47,7 +49,8 @@ export class AppComponent implements OnInit, OnDestroy {
           if (!environment.production) {
             this.userService.createUser(credentials.user);
           }
-        });
+        })
+        .catch((e) => console.error(e));
     }
   }
 
