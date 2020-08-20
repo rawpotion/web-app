@@ -62,7 +62,11 @@ export class JoinGroupComponent implements OnInit, OnDestroy {
     if (this.user) {
       if (!this.group.members.find((member) => member === this.user.uid)) {
         console.log(this.group);
-        this.groupService.addMemberToGroup(this.group.id, this.user.uid);
+        this.groupService.addMemberToGroup(
+          this.group.id,
+          this.user.uid,
+          this.link.id
+        );
       }
     }
   }

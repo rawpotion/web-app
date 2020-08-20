@@ -2,18 +2,18 @@ rules_version = '2';
 service cloud.firestore {
   match /databases/{database}/documents {
    	match /users/{user} {
-    	allow read: if request.auth != null;
+    	allow read: if request.auth != null || true;
       allow write: if request.auth.uid == resource.id;
     }
 
     match /userSettings/{userSettings} {
-    	allow read: if request.auth.uid == resource.id;
-    	allow write: if request.auth.uid == resource.id;
+    	allow get;
+    	allow write: if request.auth.uid == request.resource.id;
     }
 
     match /groups/{group} {
-    	allow read: if request.auth.uid in resource.data.members;
-      allow update: if request.auth.uid == resource.data.owner;
+    	allow read;
+      allow update: if request.auth.uid == resource.data.owner || true;
       allow delete: if request.auth.uid == resource.data.owner;
       allow create: if request.auth != null;
 
@@ -30,12 +30,16 @@ service cloud.firestore {
       }
 
       match /links/{link} {
-      	allow write, read: if request.auth.uid == get(/databases/$(database)/documents/groups/$(group)).data.owner;
+      	allow write: if request.auth.uid == get(/databases/$(database)/documents/groups/$(group)).data.owner;
       }
     }
 
     match /groups/{group}/{document=**} {
       allow read: if request.auth.uid in get(/databases/$(database)/documents/groups/$(group)).data.members
+    }
+
+    match /groups/{group}/links/{link} {
+        allow read: if true;
     }
   }
 }

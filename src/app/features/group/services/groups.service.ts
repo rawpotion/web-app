@@ -22,7 +22,7 @@ export class GroupsService {
 
   getGroups(uid: string): Observable<Group[]> {
     if (!this.groupsSubscription) {
-      console.debug('fetching groups')
+      console.debug('fetching groups');
       this.groupsSubscription = this.db
         .collection<Group>('groups', (query) =>
           query.where('members', 'array-contains', uid)
@@ -40,10 +40,12 @@ export class GroupsService {
   getGroup(groupId: string): Observable<Group> {
     return this.groupDocRef(groupId)
       .valueChanges()
-      .pipe(map((group) => {
-        console.debug("subscription called")
-        return ({...group, id: groupId});
-      }));
+      .pipe(
+        map((group) => {
+          console.debug('subscription called');
+          return { ...group, id: groupId };
+        })
+      );
   }
 
   private groupDocRef(groupId: string): AngularFirestoreDocument<Group> {
@@ -58,8 +60,12 @@ export class GroupsService {
     });
   }
 
-  addMemberToGroup(groupId: string, userId: string): Promise<void> {
-    if (!groupId || !userId) {
+  addMemberToGroup(
+    groupId: string,
+    userId: string,
+    linkId: string
+  ): Promise<void> {
+    if (!groupId || !userId || !linkId) {
       console.error(
         `either group: ${groupId} or userId: ${userId} was invalid`
       );
