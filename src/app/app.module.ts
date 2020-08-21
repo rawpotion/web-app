@@ -37,6 +37,7 @@ import { SettingsComponent } from './features/settings/components/settings/setti
 import { GroupSettingsComponent } from './features/group/components/group-settings/group-settings.component';
 import { MatDividerModule } from '@angular/material/divider';
 import {MatSlideToggleModule} from '@angular/material/slide-toggle';
+import { EventDetailsComponent } from './features/events/components/event-details/event-details.component';
 
 console.log(environment.production);
 
@@ -56,6 +57,7 @@ console.log(environment.production);
     AttendingMembersComponent,
     SettingsComponent,
     GroupSettingsComponent,
+    EventDetailsComponent,
   ],
   imports: [
     BrowserModule,
