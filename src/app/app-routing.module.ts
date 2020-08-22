@@ -17,6 +17,9 @@ import { LinksResolverService } from './features/group/services/links-resolver.s
 import { SettingsComponent } from './features/settings/components/settings/settings.component';
 import { GroupSettingsComponent } from './features/group/components/group-settings/group-settings.component';
 import { SettingsResolverService } from './features/settings/services/settings-resolver.service';
+import { EventDetailsComponent } from './features/events/components/event-details/event-details.component';
+import { EventResolverService } from './features/events/services/event-resolver.service';
+import { CommentsResolverService } from './features/comments/services/comments-resolver.service';
 
 const routes: Routes = [
   {
@@ -45,7 +48,6 @@ const routes: Routes = [
       user$: UserResolverService,
     },
   },
-
   {
     path: 'groups/:groupId/events/create',
     component: CreateEventComponent,
@@ -53,6 +55,17 @@ const routes: Routes = [
     resolve: {
       group$: GroupResolverService,
       user$: UserResolverService,
+    },
+  },
+  {
+    path: 'groups/:groupId/events/:eventId',
+    component: EventDetailsComponent,
+    canActivate: [AngularFireAuthGuard],
+    resolve: {
+      group$: GroupResolverService,
+      user$: UserResolverService,
+      event$: EventResolverService,
+      comments$: CommentsResolverService,
     },
   },
   {

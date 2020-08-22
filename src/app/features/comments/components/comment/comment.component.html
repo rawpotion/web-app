@@ -1,0 +1,15 @@
+<div class="comment-component">
+  <div class="avatar">
+    <app-user-avatar [userId]="comment.senderId"></app-user-avatar>
+  </div>
+  <div class="content">
+    <div class="para">
+      <p *ngFor="let para of comment.content.split('\n')">
+        {{ para }}
+      </p>
+    </div>
+    <small class="timestamp">{{
+      comment.timestamp | date: "EEEE, MMMM d, y h:mm"
+    }}</small>
+  </div>
+</div>

@@ -7,6 +7,7 @@ import {
 } from '@angular/fire/firestore';
 import { Group } from '../../group/models/group';
 import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 export class DinnerEvent {
   id?: string;
@@ -83,5 +84,17 @@ export class EventService {
       .collection('events')
       .doc(eventId)
       .delete();
+  }
+
+  getEvent(groupId: string, eventId: string): Observable<DinnerEvent> {
+    return this.getGroupDocRef(groupId)
+      .collection('events')
+      .doc<DinnerEvent>(eventId)
+      .valueChanges()
+      .pipe(
+        map((event) => {
+          return { ...event, id: eventId };
+        })
+      );
   }
 }

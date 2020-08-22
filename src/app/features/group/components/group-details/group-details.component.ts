@@ -1,5 +1,5 @@
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { from, Observable, ReplaySubject, Subscription } from 'rxjs';
 import { GroupsService } from '../../services/groups.service';
 import { Group } from '../../models/group';
@@ -29,7 +29,8 @@ export class GroupDetailsComponent implements OnInit, OnDestroy {
     private route: ActivatedRoute,
     private groupsService: GroupsService,
     private linksService: ShareableLinkService,
-    private eventService: EventService
+    private eventService: EventService,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
@@ -72,5 +73,11 @@ export class GroupDetailsComponent implements OnInit, OnDestroy {
 
   delete(event: DinnerEvent): Promise<void> {
     return this.eventService.delete(event.id, this.group.id);
+  }
+
+  navigateToEvent(event: DinnerEvent): Promise<boolean> {
+    return this.router.navigateByUrl(
+      `/groups/${this.group.id}/events/${event.id}`
+    );
   }
 }

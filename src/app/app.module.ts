@@ -20,7 +20,7 @@ import { GroupsComponent } from './features/group/components/groups/groups.compo
 import { CreateGroupComponent } from './features/group/components/create-group/create-group.component';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { GroupDetailsComponent } from './features/group/components/group-details/group-details.component';
 import { DisplayNameComponent } from './components/display-name/display-name.component';
@@ -36,8 +36,10 @@ import { ServiceWorkerModule } from '@angular/service-worker';
 import { SettingsComponent } from './features/settings/components/settings/settings.component';
 import { GroupSettingsComponent } from './features/group/components/group-settings/group-settings.component';
 import { MatDividerModule } from '@angular/material/divider';
-import {MatSlideToggleModule} from '@angular/material/slide-toggle';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { EventDetailsComponent } from './features/events/components/event-details/event-details.component';
+import { CommentComponent } from './features/comments/components/comment/comment.component';
+import { UserAvatarComponent } from './components/user-avatar/user-avatar.component';
 
 console.log(environment.production);
 
@@ -58,6 +60,8 @@ console.log(environment.production);
     SettingsComponent,
     GroupSettingsComponent,
     EventDetailsComponent,
+    CommentComponent,
+    UserAvatarComponent,
   ],
   imports: [
     BrowserModule,
@@ -83,6 +87,7 @@ console.log(environment.production);
     ServiceWorkerModule.register('ngsw-worker.js', {
       enabled: environment.production,
     }),
+    FormsModule,
   ],
   providers: [
     {

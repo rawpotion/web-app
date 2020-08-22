@@ -1,1 +1,56 @@
-<p>event-details works!</p>
+<div class="event-details-component">
+  <ng-template [ngIf]="loading" [ngIfElse]="isReady">
+    <p>Loading...</p>
+  </ng-template>
+  <ng-template #isReady>
+    <mat-card>
+      <mat-card-header>
+        <mat-card-title>
+          {{ event.recipe }}
+        </mat-card-title>
+        <mat-card-subtitle>
+          {{ event.date | date: "fullDate" }} - {{ event.time }}
+        </mat-card-subtitle>
+      </mat-card-header>
+      <mat-card-content>
+        <div class="event-details">
+          <div class="event-description">
+            <p>
+              <strong>Host:</strong> {{ " " }}
+              <app-display-name [userId]="event.hostId"></app-display-name>
+            </p>
+          </div>
+          <div class="divider">
+            <mat-divider></mat-divider>
+          </div>
+          <h3>Comments</h3>
+          <div class="event-comments-container">
+            <ul>
+              <li *ngFor="let comment of comments">
+                <app-comment [comment]="comment"></app-comment>
+              </li>
+            </ul>
+          </div>
+          <div>
+            <mat-form-field class="textarea-fullwidth" appearance="outline">
+              <mat-label>Comment</mat-label>
+              <textarea
+                [(ngModel)]="userComment"
+                #ctrl="ngModel"
+                matInput
+                name="recipe"
+                type="text"
+              ></textarea>
+            </mat-form-field>
+          </div>
+          <button mat-stroked-button color="accent" (click)="sendComment()">
+            Send
+          </button>
+          <div class="divider">
+            <mat-divider></mat-divider>
+          </div>
+        </div>
+      </mat-card-content>
+    </mat-card>
+  </ng-template>
+</div>

@@ -4,28 +4,28 @@ import {
   UserService,
 } from '../../features/user/services/user.service';
 import { Subscription } from 'rxjs';
-import { first } from 'rxjs/operators';
+import { User } from 'firebase';
 
 @Component({
-  selector: 'app-display-name',
-  templateUrl: './display-name.component.html',
-  styleUrls: ['./display-name.component.sass'],
+  selector: 'app-user-avatar',
+  templateUrl: './user-avatar.component.html',
+  styleUrls: ['./user-avatar.component.sass'],
 })
-export class DisplayNameComponent implements OnInit, OnDestroy {
+export class UserAvatarComponent implements OnInit, OnDestroy {
   @Input() userId: string;
 
-  user: StoredUser;
+  user: User;
   private userSubscription: Subscription;
-  private loading = true;
+  public loading = true;
 
   constructor(private userService: UserService) {}
 
   ngOnInit(): void {
     this.userSubscription = this.userService
-      .getUser(this.userId)
+      .getCurrentUser()
       .subscribe((user) => {
         if (user) {
-          console.debug('display-name: updating user');
+          console.debug('updating user');
           this.user = user;
           this.loading = false;
         }
