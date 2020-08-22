@@ -6,10 +6,11 @@ import { AngularFirestore } from '@angular/fire/firestore';
 import { map } from 'rxjs/operators';
 
 export class StoredUser {
-  id: string;
+  id?: string;
   name: string;
   email: string;
   createdAt: string;
+  photoUrl?: string;
 }
 
 class StoredUsersState {
@@ -51,6 +52,7 @@ export class UserService {
       name: user.displayName,
       createdAt: user.metadata.creationTime,
       email: user.email,
+      photoUrl: user.photoURL
     });
   }
 

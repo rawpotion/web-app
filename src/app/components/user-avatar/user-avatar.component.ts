@@ -5,6 +5,7 @@ import {
 } from '../../features/user/services/user.service';
 import { Subscription } from 'rxjs';
 import { User } from 'firebase';
+import { ProfileService } from '../../features/profile/services/profile.service';
 
 @Component({
   selector: 'app-user-avatar',
@@ -14,15 +15,18 @@ import { User } from 'firebase';
 export class UserAvatarComponent implements OnInit, OnDestroy {
   @Input() userId: string;
 
-  user: User;
+  user: StoredUser;
   private userSubscription: Subscription;
   public loading = true;
 
-  constructor(private userService: UserService) {}
+  constructor(
+    private userService: UserService,
+    private profileService: ProfileService
+  ) {}
 
   ngOnInit(): void {
     this.userSubscription = this.userService
-      .getCurrentUser()
+      .getUser(this.userId)
       .subscribe((user) => {
         if (user) {
           console.debug('updating user');

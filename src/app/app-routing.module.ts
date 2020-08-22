@@ -20,6 +20,7 @@ import { SettingsResolverService } from './features/settings/services/settings-r
 import { EventDetailsComponent } from './features/events/components/event-details/event-details.component';
 import { EventResolverService } from './features/events/services/event-resolver.service';
 import { CommentsResolverService } from './features/comments/services/comments-resolver.service';
+import { EditProfileComponent } from './features/profile/components/edit-profile/edit-profile.component';
 
 const routes: Routes = [
   {
@@ -94,6 +95,11 @@ const routes: Routes = [
   {
     path: 'groups',
     component: GroupsComponent,
+    canActivate: [AngularFireAuthGuard],
+  },
+  {
+    path: 'profile/edit',
+    component: EditProfileComponent,
     canActivate: [AngularFireAuthGuard],
   },
   {

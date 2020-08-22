@@ -18,5 +18,6 @@ export const createUserRecord = functions.auth
       name: user.displayName,
       email: user.email,
       createdAt: context.timestamp,
+      photoUrl: user.photoURL
     });
   });

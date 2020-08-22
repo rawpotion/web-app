@@ -40,6 +40,7 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { EventDetailsComponent } from './features/events/components/event-details/event-details.component';
 import { CommentComponent } from './features/comments/components/comment/comment.component';
 import { UserAvatarComponent } from './components/user-avatar/user-avatar.component';
+import { EditProfileComponent } from './features/profile/components/edit-profile/edit-profile.component';
 
 console.log(environment.production);
 
@@ -62,6 +63,7 @@ console.log(environment.production);
     EventDetailsComponent,
     CommentComponent,
     UserAvatarComponent,
+    EditProfileComponent,
   ],
   imports: [
     BrowserModule,
