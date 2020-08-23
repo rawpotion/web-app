@@ -31,9 +31,11 @@
           Create Event
         </button>
         <span class="spacer"></span>
-        <button mat-icon-button color="primary" routerLink="settings">
-          <mat-icon>settings</mat-icon>
-        </button>
+        <span *ngIf="isOwner()">
+          <button mat-icon-button color="primary" routerLink="settings">
+            <mat-icon>settings</mat-icon>
+          </button>
+        </span>
       </mat-card-actions>
     </mat-card>
 
@@ -69,17 +71,23 @@
         <mat-action-row>
           <button
             mat-stroked-button
-            color="warn"
-            (click)="delete(event)"
-            *ngIf="event.hostId == userId"
+            color="primary"
+            (click)="navigateToEvent(event)"
           >
-            Delete
+            View Details
           </button>
-          <button mat-stroked-button color="primary" (click)="navigateToEvent(event)">View Details</button>
-          <button mat-raised-button color="accent" (click)="attend(event)">
+          <button
+            mat-raised-button
+            color="accent"
+            (click)="attend(event)"
+          >
             Attend
           </button>
-          <button mat-raised-button color="warn" (click)="cancelAttend(event)">
+          <button
+            mat-raised-button
+            color="warn"
+            (click)="cancelAttend(event)"
+          >
             Cannot Attend
           </button>
         </mat-action-row>

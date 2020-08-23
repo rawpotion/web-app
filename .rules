@@ -12,7 +12,8 @@ service cloud.firestore {
     }
 
     match /groups/{group} {
-      allow read;
+      allow list: if request.auth.uid in resource.data.members;
+      allow get;
       allow update: if request.auth.uid == resource.data.owner || true;
       allow delete: if request.auth.uid == resource.data.owner;
       allow create: if request.auth != null;

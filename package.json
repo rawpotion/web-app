@@ -8,6 +8,7 @@
     "build:prod": "ng build --prod",
     "build:deploy": "ng build --prod && firebase deploy --only hosting",
     "build:deploy-rules": "firebase deploy --only firestore:rules",
+    "deploy:all": "firebase deploy",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e"

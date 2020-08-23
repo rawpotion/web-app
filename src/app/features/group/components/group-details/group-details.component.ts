@@ -1,16 +1,17 @@
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { from, Observable, ReplaySubject, Subscription } from 'rxjs';
+import { from, Observable, of, ReplaySubject, Subscription } from 'rxjs';
 import { GroupsService } from '../../services/groups.service';
 import { Group } from '../../models/group';
 import { ShareableLinkService } from '../../services/shareable-link.service';
-import { first, takeUntil } from 'rxjs/operators';
+import { first, map, switchMap, takeUntil } from 'rxjs/operators';
 import {
   DinnerEvent,
   EventService,
 } from '../../../events/services/event.service';
 import { UserService } from '../../../user/services/user.service';
 import { User } from 'firebase';
+import DocumentData = firebase.firestore.DocumentData;
 
 @Component({
   selector: 'app-group-details',
@@ -79,5 +80,9 @@ export class GroupDetailsComponent implements OnInit, OnDestroy {
     return this.router.navigateByUrl(
       `/groups/${this.group.id}/events/${event.id}`
     );
+  }
+
+  isOwner(): boolean {
+    return this.userId === this.group.owner;
   }
 }
